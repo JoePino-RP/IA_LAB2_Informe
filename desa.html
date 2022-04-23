@@ -59,9 +59,87 @@
                         
                         <h2 class="section-heading">Algoritmo de reconocimiento de patrones</h2>
                         
+                        <p>                            
+                            Para la primera entrega se entreno una red neuronal con una tecnologia a elección y un dataset 
+                            (de 10 diferentes caracteres) a elección. La tecnologia seleccionada fue el lenguaje de Python, debido a la 
+                            facilidad de implementación de redes neuronales mediante paquetes como ScikitLearn, Tensorflow o PyTorch. 
+                            Se uso la libreria de Tensorflow y se implemento la red neuronal mediante su API de Keras. El dataset usado 
+                            fue el MNIST, una base de datos de 10 numeros escritos a manos, digitos del 0 al 9. Este dataset ya 
+                            viene implementado directamente en la API de Keras, cuenta con 70.000 imagenes, usando 60.000 para 
+                            Train y 10.000 para Test, despues, se uso el 20% de los datos de Train como validation. Se carga el 
+                            dataset mediante:
+                        </p>
+
+                        <a href="#!"><img class="img-fluid" src="assets/img/carbon (6).png" alt="..." /></a>
+                        <span class="caption text-muted"></span>
+                        
                         <a href="#!"><img class="img-fluid" src="assets/img/ecm.png" alt="..." /></a>
                         <span class="caption text-muted">Funión de perdida: Ecuación error cuadrático medio</span>
 
+                        
+                        <p>
+                            Este dataset automaticamente nos arroja la división anteriormente descrita, entre datos de entrenamiento 
+                            y prueba; una vez realizado esto, se normaliza el dataset, como viene en imagenes .jpg y en escala de 
+                            grises, se divide la cantidad de pixeles entre 255, esto se hace como buena practica antes de entrenar 
+                            la red. Los labels o 
+                            etiquetas, que son los identificadores de cada clase de salida, pasan por un proceso de conversión a 
+                            variables dummy, denominado <b>One-hot Encoding</b>. Este proceso permite separar las categorias de los 
+                            números en columnas independientes, esto evita que el algoritmo pueda generar mas preferencia sobre 
+                            las clases con un mayor número, tambien se considera una buena practica sobre variables categoricas 
+                            ordinales , antes de entrar al entrenamiento del algoritmo. El one-hot encoding reduce el overfitting y 
+                            permite una ejecución mas rapida del entrenamiento del algoritmo, pues se facilita la operación de 
+                            matrices solo con variables binarias (1 y 0). Para evitar problemas en la inversión de matrices (durante 
+                            el entrenamiento) debido a la diagonal de unos que representa el proceso de one-hot encoding, se elimina 
+                            la primera o ultima columna generada. Esto no supone un problema, pues el digito (columna) que se suprima,
+                            quedara descrito mediante la ausencia del dato en las columnas de los otros digitos. Los datos de entrada 
+                            del MNIST entran como una imagen de 28x28x1, escala de grises y sin ninguna operación adicional previa al 
+                            entrenamiento (como lo puede ser data agumentation). Se describe el modelo de redes convolucionales 
+                            (ideales para obtener caracteristicas de imagenes) como se ve a continuación:
+                        </p>
+
+                        <a href="#!"><img class="img-fluid" src="assets/img/carbon (3).png" alt="..." /></a>
+                        <span class="caption text-muted">Código de modelo de red convolucional</span>
+
+                        <p>
+                            El modelo esta descrito mediante la tensorflow como:
+                        </p>
+
+                        <a href="#!"><img class="img-fluid" src="assets/img/tab_pin_1.png" alt="..." /></a>
+                        <span class="caption text-muted">Modelo de Tensorflow</span>
+
+                        <p>
+                            Se eligio el batch de 32, pues se encontro que es lo recomendado en la literatura. Las epocas se 
+                            fijaron a 15 pues tras varias pruebas no se encontro mejoria significativa al incrementar este parametro.
+                            La función de perdida de definio como “categorical_crossentropy” debido a que es un problema de 
+                            clasificación multiclase. Se utilizo un optimizar Adam con los parametros por defecto de Keras.
+                            La metrica a evaluar fue el <b>Accuracy</b>. En la ultima epoca, finalizado el entrenamiento se obtuvo:
+                        </p>
+
+                        <a href="#!"><img class="img-fluid" src="assets/img/carbon (4).png" alt="..." /></a>
+                        <span class="caption text-muted">Código de modelo de red convolucional</span>
+
+                        <p>
+                            Se generó una grafica de el error (loss) para cada epoca durante el entrenamiento:
+                        </p>
+
+                        <a href="#!"><img class="img-fluid" src="assets/img/gr_pin1.png" alt="..." /></a>
+                        <span class="caption text-muted">Gráfica de val loss</span>
+
+                        <p>
+                            Se genero otra grafica para mirar el desempeño entre el set de Train y el de Validation, como se puede observar, 
+                            en la ultima epoca el valor de la metrica evaluada es muy cercano, dando un modelo muy robusto en cuando a overfitting.
+                        </p>
+
+                        <a href="#!"><img class="img-fluid" src="assets/img/gr_pin2.png" alt="..." /></a>
+                        <span class="caption text-muted">Gráfica de validación de entrenamiento</span>
+
+                        <p>
+                            Evaluando el modelo con los datos de Test, se obtuvo (ver salida), lo que comparado con la grafica anterior, nos indica 
+                            un modelo con excelente desempeño tanto con datos de entrenamiento como de test:
+                        </p>
+
+                        <a href="#!"><img class="img-fluid" src="assets/img/carbon (5).png" alt="..." /></a>
+                        <span class="caption text-muted">Datos de test loss y test accuracy</span>
 
                         <h2 class="section-heading">Interfaz de usuario</h2>
 
@@ -73,7 +151,48 @@
                         
 
 
-                        <h2 class="section-heading">Generación de trayetorias</h2>
+                        <h2 class="section-heading">Generación de trayectorias</h2>
+
+                        <p>
+                            Para la segunda entrega se planteo la creación de una red neuronal desde cero, las estrategias usadas 
+                            se describiran a continuación, pero la matematica implicita se describira de manera breve (como el 
+                            algoritmo de backpropagation). Se carga de la misma manera el dataset desde Keras (como en la primera 
+                            entrega), y su uso sera unicamente para el ingreso de datos, mas no para el entrenamiento de la red.
+                            Se procede a realizar el proceso de normalización (descrito anterior mente) y de reshape, este ultimo 
+                            permite que las imagenes queden en un tensor de 28x28, donde cada casilla contiene el valor normalizado 
+                            del pixel en escala de grises. Por último, se usa la utilidad “to_categorical” de Keras para poder obtener 
+                            de manera automatica el <b>one hot-encoding</b> de la salida. Se usaron las función de activación 
+                            ReLU (para las capas internas) y Softmax (de salida), de manera similar a la implementación de la primera 
+                            entrega. La función de perdida, a diferencia del anterior entrega, se utilizo el error cuadratico medio, 
+                            por facilidad de implementación en código. El learning rate se definio a 0.001, se uso vectorización 
+                            como estrategia para reducir el costo computacional, permitiendo entrenaran con el mismo dataset de MNIST 
+                            y en la misma magnitud (60.000 imagenes). Por lo que la entrada del algoritmo era una matriz de 60.000x784, 
+                            en donde el 784 pertenece a la cantidad de neuronas en la capa de entrada (28x28, una neurona por pixel). 
+                            Los pesos, los parametros <b><i>b</i></b> y los cambios de estos dos, se guardaron en un diccionario a 
+                            medida que la red entrenaba, por lo que todo el resultado del entrenamiento quedo en una solo estructura.
+                            La arquitectura elegida fueron 4 capas de neuronas, en donde se incluian:
+                        </p>
+
+                        <p>
+                            <ol> La de entrada, con 784 neuronas.</ol>
+                            <br>
+                            <ol> Dos capas ocultas, una de 128 y otra de 64 neuronas.</ol>
+                            <br>
+                            <ol>La última capa de 10 neuronas. </ol>
+                            <br>
+                            <ol>Se usaron mas neuronas (a comparación de la anterior entrega) para intentar suplir la falta de operaciones 
+                            de Pooling o Dropout que teniamos en el anterior modelo.</ol>
+                            <br>
+                            <ol>Este algoritmo no usa set de validación, solo entrena con las 60.000 para train.</ol>
+                            <br>
+                            <ol>Tuvo una <b>Accuracy</b> sobre test del 96%.</ol>
+                            <br>
+                            <ol>El diccionario generado, con todos los pesos del entrenamiento, fue exportado a un archivo .json 
+                            para su posterior uso, generando la misma estrategia que la entrega pasada, solo que esta vez solo 
+                            se podia exportal los pesos en vez de todo el modelo, ademas de que toca implementar el algoritmo
+                             nuevamente si se requiere usar los pesos, pero esto nos entrega la facilidad de no tener que 
+                             reentrenar el modelo para usarlo.</ol>
+                        </p>
 
                         <h3 class="subsection-heading">Simulación</h2>
 
@@ -173,7 +292,7 @@
                         <ul class="list-inline text-center">
                             <li class="list-inline-item">
                                 <a href="#!">
-                                    <span class="fa-stack fa-lg">
+                                    <span class="fa-stack fa-lg">   
                                         <i class="fas fa-circle fa-stack-2x"></i>
                                         <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
                                     </span>
