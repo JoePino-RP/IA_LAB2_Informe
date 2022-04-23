@@ -58,6 +58,101 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
+                        
+                        <h2 class="section-heading">Descripción general de la práctica</h2>
+                        
+                        <h2 class="section-heading">Algoritmo de reconocimiento de patrones</h2>
+                        
+                        <a href="#!"><img class="img-fluid" src="assets/img/ecm.png" alt="..." /></a>
+                        <span class="caption text-muted">Ecuación error cuadrático medio</span>
+
+
+                        <h2 class="section-heading">Interfaz de usuario</h2>
+                        
+                        <h2 class="section-heading">Generación de trayetorias</h2>
+
+                        <h3 class="subsection-heading">Simulación</h2>
+
+                            <p>
+                                Después de haber identificado los números, se procede a realizar la identificación de la trayectoria, 
+                                es importante aclarar que la identificación de dicha trayectoria por la red de kohonen no hacia parte 
+                                para esta entrega de laboratorio aun así se implementó. Para poder realizarla se lee un archivo CSV 
+                                proporcionado por el software Python; esto con el fin de realizar una “conexión” esto entre comillas 
+                                porque es la forma en como obtenemos los datos generados de un software y utilizados por el otro, esto 
+                                saber las posiciones donde se encuentran los cubos que serán recogidos por el robot realizado. Esta parte 
+                                se muestra en la siguiente imagen 
+                            </p>
+                            <a href="#!"><img class="img-fluid" src="assets/img/Simu_1.jpeg" alt="..." /></a>
+                            <span class="caption text-muted">Ecuación error cuadrático medio</span>
+                        
+                            <p>
+                                Posteriormente se realizan las cuatro fases necesarias para este tipo de redes como lo son sus etapas: 
+                                Asignación de pesos, Proceso competitivo, proceso cooperativo y adaptativo. Inicialmente se determina cuales 
+                                son los valores máximo y mínimo para cada una de sus entradas en este caso para la posición en x y en y, esto 
+                                con el fin de generar los pesos con valores aleatorios dentro del rango de los valores de entrada. 
+                                Posteriormente se realiza el proceso competitivo el cual consiste en buscar cual neurona está más cerca del 
+                                valor de la entrada, esto realizo con la distancia euclidiana con la ecuación que se muestra a continuación 
+                            </p>
+                            
+                            <a href="#!"><img class="img-fluid" src="assets/img/eq_par.png" alt="..." /></a>
+                            <span class="caption text-muted"></span>
+
+                            <p>
+                                El siguiente paso es el cooperativo este consiste en crear una función gaussiana a partir de la neurona 
+                                ganadora del paso anterior y con esto empezar a disminuir el porcentaje de pertenencia en las neuronas 
+                                vecinas para este paso se utiliza la siguiente expresión 
+                            </p>
+
+                            <a href="#!"><img class="img-fluid" src="assets/img/eq_par2.png" alt="..." /></a>
+                            <span class="caption text-muted"></span>
+
+                            <p>
+                                Donde el valor de sigma es el número de neuronas y d es el paso que se va generando entre las neuronas 
+                                vecinas iniciando en un valor de cero para la neurona ganadora y vas incrementando hacia las dos vecindades de 
+                                esta neurona ya que es de una sola dimensión hasta llegar a la neurona más leja.
+                            </p>
+
+                            <p>
+                                Finalmente se entra a la etapa del proceso adaptativo en el cual se busca que los pesos varíen dependiendo de cual de los 
+                                puntos ingresados este mas cercano esto con el fin de crear grupos y poder tener con objetivo la trayectoria mas adecuada 
+                                y mas optima para el desplazamiento del robot móvil, para este proceso se utiliza la siguiente expresión 
+                            </p>
+                            
+                            <a href="#!"><img class="img-fluid" src="assets/img/eq_par3.png" alt="..." /></a>
+                            <span class="caption text-muted"></span>
+
+                            <p>
+                                Es importante aclarar que el valor de μ es un factor de aprendizaje se calcula de la siguiente manera 
+                            </p>
+
+                            <a href="#!"><img class="img-fluid" src="assets/img/eq_par4.png" alt="..." /></a>
+                            <span class="caption text-muted"></span>
+                            
+                            <p>
+                                donde μ_0 es una constante que por recomendaciones toma el valor 0.1. Ya con esto se termina terminan las cuatro 
+                                etapas de esta red y para lograr un resultado optimo se realiza varias veces el cálculo y se para por iteraciones 
+                                dando como resultado la siguiente imagen 
+                            </p>
+
+                            <a href="#!"><img class="img-fluid" src="assets/img/Simu_2.jpeg" alt="..." /></a>
+                            <span class="caption text-muted">Simulación de la trayectorio</span>
+
+                            <p>
+                                Como ultimo paso se realiza la limpieza de las neuronas que se encuentran lejas a los puntos esto con el fin de reducir 
+                                los puntos intermedios entre las posiciones importante en este caso la ubicación de las cajas como se muestra a continuación. 
+                            </p>
+
+                            <a href="#!"><img class="img-fluid" src="assets/img/Simu_3.jpeg" alt="..." /></a>
+                            <span class="caption text-muted">Simulación de la trayectorio</span>
+
+                            <p>
+                                Para la realización de la simulación se envían las posiciones al Workspace de Matlab esto con el fin de poderlas leer desde 
+                                simulink y realizar el control de alto nivel y de bajo nivel como se había mostrado en las entregas anteriores.
+                            </p>
+
+                            <iframe width="840" height="473" src="https://www.youtube.com/embed/2bNgyv2GRd8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; 
+                            clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <h3 class="subsection-heading">Físico</h2>
                         <p>Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which all men occupy as equals. The airman's earth, if free men make it, will be truly round: a globe in practice, not in theory.</p>
                         <p>Science cuts two ways, of course; its products can be used for both good and evil. But there's no turning back from science. The early warnings about technological dangers also come from science.</p>
                         <p>What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.</p>
@@ -70,8 +165,7 @@
                         <p>Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.</p>
                         <h2 class="section-heading">Reaching for the Stars</h2>
                         <p>As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.</p>
-                        <a href="#!"><img class="img-fluid" src="assets/img/post-sample-image.jpg" alt="..." /></a>
-                        <span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span>
+                        
                         <p>Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.</p>
                         <p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.</p>
                         <p>
