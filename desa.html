@@ -36,7 +36,7 @@
             </div>
         </nav>
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url('assets/img/post-bg.jpg')">
+        <header class="masthead" style="background-image: url('assets/img/im_rec.jpg')">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
@@ -57,7 +57,12 @@
                         
                         <h2 class="section-heading">Descripción general de la práctica</h2>
                         
-                        <h2 class="section-heading">Algoritmo de reconocimiento de patrones</h2>
+                            El método utilizado para la función de perdida es la ecuación de error cuadrático
+                            
+                            <a href="#!"><img class="img-fluid" src="assets/img/ecm.png" alt="..." /></a>
+                            <span class="caption text-muted">Función de perdida: Ecuación error cuadrático medio</span>
+                        
+                            <h2 class="section-heading">Algoritmo de reconocimiento de patrones</h2>
                         
                         <p>                            
                             Para la primera entrega se entreno una red neuronal con una tecnologia a elección y un dataset 
@@ -72,11 +77,7 @@
 
                         <a href="#!"><img class="img-fluid" src="assets/img/carbon (6).png" alt="..." /></a>
                         <span class="caption text-muted"></span>
-                        
-                        <a href="#!"><img class="img-fluid" src="assets/img/ecm.png" alt="..." /></a>
-                        <span class="caption text-muted">Funión de perdida: Ecuación error cuadrático medio</span>
-
-                        
+                    
                         <p>
                             Este dataset automaticamente nos arroja la división anteriormente descrita, entre datos de entrenamiento 
                             y prueba; una vez realizado esto, se normaliza el dataset, como viene en imagenes .jpg y en escala de 
@@ -141,7 +142,18 @@
                         <a href="#!"><img class="img-fluid" src="assets/img/carbon (5).png" alt="..." /></a>
                         <span class="caption text-muted">Datos de test loss y test accuracy</span>
 
+                        <a href="#!"><img class="img-fluid" src="assets/img/Alg_Rec.jpeg" alt="..." /></a>
+                        <span class="caption text-muted">Algoritmo de reconoc de patrones</span>
+
                         <h2 class="section-heading">Interfaz de usuario</h2>
+
+                        <p>
+                            La interfaz de usuario se realiza con Python con la librería tkinter, se tienen dos paneles
+                            (uno a la derecha y otro a la izquierda); en el de la derecha se tienen los valores de patrones
+                            seguidos por sus porcentajes de coincidencia. En el panel izquierdo se dibuja el patron que se va+
+                            a evaluar; haciendo click pinta de blanco y finalmente se evalua con las pestañas superiores
+                            ya sea con los valores calculados de forma manual o con keras auto tuner
+                        </p>
 
                         <a href="#!"><img class="img-fluid" src="assets/img/GUI1.PNG" alt="..." /></a>
                         <span class="caption text-muted">GUI con valores generados por Keras</span>
@@ -276,8 +288,47 @@
                             <iframe width="840" height="473" src="https://www.youtube.com/embed/2bNgyv2GRd8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; 
                             clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         <h3 class="subsection-heading">Físico</h2>
-                        <blockquote class="blockquote">The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.</blockquote>
                         
+                            <p>
+                                En la ultima entrega se hizo uso de tecnicas de visión de maquina para poder identificar los caracteres impresos 
+                                sobre cubos de 5x5cm, que serian posteriormente recolectados por el robot movil. La estrategia usada se describe a 
+                                continuación:
+                            </p>
+
+                            <p>
+                                <ol>
+                                    Primero se genero el terreno y los cubos, el terreno esta en alto contraste con los cubos, 
+                                    para que sea de facil identificación. El piso (2x2m) es de color blanco, mientras que los 
+                                    cubos son de color negro y blanco, con caracteres impresos directamente del dataset MNIST.
+                                </ol>
+                                <ol>
+                                    Para los numeros, se decidio usar el 1, 4 y 8, por la alta diferencia entre sus trazos que 
+                                    permite una mayor precisión al momento de usar la red neuronal.
+                                </ol>
+                                <ol>
+                                    El modelo usado fue el descrito en la primera entrega, pues tuvo mejor desempeño en el dataset de Test, 
+                                    asi como en posteriores pruebas en los caracteres dibujados en la interfaz de la segunda entrega.
+                                </ol>
+                            </p>
+
+                            <p>
+                                Se tomaron varias imagenes como la descrita a continuación:
+                            </p>
+
+                            <a href="#!"><img class="img-fluid" src="assets/img/piso_1.png" alt="..." /></a>
+                            <span class="caption text-muted">Escaneo del tapete y cubos</span>
+
+                            <p>
+                                El robot de posicióna cerca del punto (0,0) del m, se generó una mascara sobre la imagen 
+                                para despues poder separar los digitos independientemente, en esta mascara se usaron dos 
+                                operación morfologicas: un threshold para separar el blanco y negro (binario invertido y OTSU), 
+                                y una operación de dilatación (para discriminar los digitos del recuadro que los contiene). La
+                                mascara quedo como la imagen que se ve a continuación:
+                            </p>
+
+                            <a href="#!"><img class="img-fluid" src="assets/img/mask.png" alt="..." /></a>
+                            <span class="caption text-muted">Máscara final</span>
+                            
                         
                         </p>
                     </div>
